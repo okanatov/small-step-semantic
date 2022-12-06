@@ -12,13 +12,21 @@
 	[(define (can-be-reduced val) (reducible-less-than? val))
 	 (define (reduce val) (reduce-less-than val))])
 
-(define (show-less-than val) (format "~a < ~a" (show (LessThan-left val)) (show (LessThan-right val))))
+(define/contract (show-less-than val)
+		 (LessThan? . -> . string?)
+		 (format "~a < ~a" (show (LessThan-left val)) (show (LessThan-right val))))
 
-(define (reducible-less-than? val) #true)
+(define/contract (reducible-less-than? val)
+		 (LessThan? . -> . boolean?)
+		 #true)
 
-(define (reduce-less-than val)
-  (cond
-    [(can-be-reduced (LessThan-left val)) (LessThan (reduce (LessThan-left val)) (LessThan-right val))]
-    [(can-be-reduced (LessThan-right val)) (LessThan (LessThan-left val) (reduce (LessThan-right val)))]
-    [else (Boolean (< (Number-value (LessThan-left val)) (Number-value (LessThan-right val))))]))
+(define/contract (reduce-less-than val)
+		 (LessThan? . -> . (or/c Boolean? LessThan?))
+		 (cond
+		   [(can-be-reduced (LessThan-left val))
+		    (LessThan (reduce (LessThan-left val)) (LessThan-right val))]
+		   [(can-be-reduced (LessThan-right val))
+		    (LessThan (LessThan-left val) (reduce (LessThan-right val)))]
+		   [else
+		     (Boolean (< (Number-value (LessThan-left val)) (Number-value (LessThan-right val))))]))
 

@@ -12,13 +12,21 @@
 	[(define (can-be-reduced val) (reducible-mul? val))
 	 (define (reduce val) (reduce-mul val))])
 
-(define (show-mul val) (format "~a * ~a" (show (Multiply-left val)) (show (Multiply-right val))))
+(define/contract (show-mul val)
+		 (Multiply? . -> . string?)
+		 (format "~a * ~a" (show (Multiply-left val)) (show (Multiply-right val))))
 
-(define (reducible-mul? val) #true)
+(define/contract (reducible-mul? val)
+		 (Multiply? . -> . boolean?)
+		 #true)
 
-(define (reduce-mul val)
-  (cond
-    [(can-be-reduced (Multiply-left val)) (Multiply (reduce (Multiply-left val)) (Multiply-right val))]
-    [(can-be-reduced (Multiply-right val)) (Multiply (Multiply-left val) (reduce (Multiply-right val)))]
-    [else (Number (* (Number-value (Multiply-left val)) (Number-value (Multiply-right val))))]))
+(define/contract (reduce-mul val)
+		 (Multiply? . -> . (or/c Number? Multiply?))
+		 (cond
+		   [(can-be-reduced (Multiply-left val))
+		    (Multiply (reduce (Multiply-left val)) (Multiply-right val))]
+		   [(can-be-reduced (Multiply-right val))
+		    (Multiply (Multiply-left val) (reduce (Multiply-right val)))]
+		   [else
+		     (Number (* (Number-value (Multiply-left val)) (Number-value (Multiply-right val))))]))
 

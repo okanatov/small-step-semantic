@@ -2,7 +2,7 @@
 
 (require "showable.scm" "reducible.scm")
 
-(provide Boolean Boolean-value)
+(provide Boolean Boolean-value Boolean?)
 
 (struct Boolean (value)
 	#:methods gen:showable
@@ -11,6 +11,11 @@
 	#:methods gen:reducible
 	[(define (can-be-reduced val) (reducible-boolean? val))])
 
-(define (show-boolean val) (format "~a" (Boolean-value val)))
-(define (reducible-boolean? val) #false)
+(define/contract (show-boolean val)
+		 (Boolean? . -> . string?)
+		 (format "~a" (Boolean-value val)))
+
+(define/contract (reducible-boolean? val)
+		 (Boolean? . -> . boolean?)
+		 #false)
 

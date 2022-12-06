@@ -1,8 +1,9 @@
 #lang racket
 
+(require racket/contract)
 (require "showable.scm" "reducible.scm")
 
-(provide Number Number-value)
+(provide Number Number-value Number?)
 
 (struct Number (value)
 	#:methods gen:showable
@@ -11,6 +12,11 @@
 	#:methods gen:reducible
 	[(define (can-be-reduced val) (reducible-num? val))])
 
-(define (show-num val) (format "~a" (Number-value val)))
-(define (reducible-num? val) #false)
+(define/contract (show-num val)
+		 (Number? . -> . string?)
+		 (format "~a" (Number-value val)))
+
+(define/contract (reducible-num? val)
+		 (Number? . -> . boolean?)
+		 #false)
 
