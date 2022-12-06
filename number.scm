@@ -2,7 +2,7 @@
 
 (require "showable.scm" "reducible.scm")
 
-(provide Number)
+(provide Number Number-value)
 
 (struct Number (value)
 	#:methods gen:showable
