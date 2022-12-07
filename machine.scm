@@ -4,10 +4,10 @@
 
 (provide machine-step)
 
-(define (machine-step expr)
+(define (machine-step expr env)
   (begin
     (displayln (show expr))
     (cond
-      [(can-be-reduced expr) (machine-step (reduce expr))]
+      [(can-be-reduced expr) (machine-step (reduce expr env) env)]
       [else expr])))
 

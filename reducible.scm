@@ -5,6 +5,6 @@
 (provide gen:reducible can-be-reduced reduce)
 
 (define-generics reducible 
-		 [can-be-reduced reducible]
-		 [reduce reducible])
+  [can-be-reduced reducible]
+  [reduce reducible env])
 

@@ -5,5 +5,5 @@
 (provide gen:showable show)
 
 (define-generics showable 
-		 [show showable])
+  [show showable])
 
