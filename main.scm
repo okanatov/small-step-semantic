@@ -10,9 +10,10 @@
   "variable.scm"
   )
 
-(define env (make-hash))
-(hash-set! env "x" 3)
-(hash-set! env "y" 4)
+(define env0 (hash))
+(define env (hash-set
+	      (hash-set env0 "x" 3)
+	      "y" 4))
 
 (machine-step (LessThan
                (Number 5)
