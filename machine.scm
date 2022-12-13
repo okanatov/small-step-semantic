@@ -8,6 +8,8 @@
   (begin
     (displayln (show expr))
     (cond
-      [(can-be-reduced expr) (machine-step (reduce expr env) env)]
-      [else expr])))
+      [(can-be-reduced expr) (let*
+			       ([frame (reduce expr env)])
+			       (machine-step (car frame) (cdr frame)))]
+      [else (cons expr env)])))
 

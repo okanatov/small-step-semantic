@@ -1,4 +1,3 @@
-Re-make the machine so that it would take instruction and environment returned from the reduce functions
 Re-make the expression reduce functions so that they would return environment as well as the value
 Sequence
 If

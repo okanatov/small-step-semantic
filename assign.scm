@@ -1,6 +1,6 @@
 #lang racket
 
-(require "showable.scm" "reducible.scm" "donothing.scm" "number.scm")
+(require "showable.scm" "reducible.scm" "donothing.scm" "number.scm" "boolean.scm")
 
 (provide Assign)
 
@@ -26,5 +26,8 @@
     [(can-be-reduced (Assign-expr val))
      (cons (Assign (Assign-name val) (reduce (Assign-expr val) env)) env)]
     [else
-     (cons (DoNothing) (hash-set env (Assign-name val) (Number-value (Assign-expr val))))]))
+     (cons (DoNothing) (hash-set env (Assign-name val)
+				 (if (Number? (Assign-expr val))
+				 (Number-value (Assign-expr val))
+				 (Boolean-value (Assign-expr val)))))]))
 
