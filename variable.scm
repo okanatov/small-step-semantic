@@ -1,6 +1,6 @@
 #lang racket
 
-(require "showable.scm" "reducible.scm" "number.scm")
+(require "showable.scm" "reducible.scm" "number.scm" "boolean.scm")
 
 (provide Variable)
 
@@ -21,5 +21,8 @@
   #true)
 
 (define/contract (reduce-var val env)
-  (Variable? hash? . -> . Number?)
-  (Number (hash-ref env (Variable-name val))))
+  (Variable? hash? . -> . any)
+  (let ([val (hash-ref env (Variable-name val))])
+            (cond
+              [(boolean? val) (Boolean val)]
+              [else (Number val)])))
