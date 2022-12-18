@@ -10,6 +10,7 @@
   "variable.scm"
   "assign.scm"
   "if.scm"
+  "sequence.scm"
   )
 
 (define env (hash-set
@@ -22,7 +23,12 @@
 ;					   (Multiply (Number 3) (Variable "y")))))
 ;			env))
 
-(define f (machine-step (If (Variable "x") (Assign "y" (Number 1)) (Assign "y" (Number 2)))
+;(define f (machine-step (If (Variable "x") (Assign "y" (Number 1)) (Assign "y" (Number 2)))
+;			(hash-set (hash) "x" #f)))
+
+(define f (machine-step (Sequence (Assign "x" (Add (Number 1) (Number 1)))
+				  (Assign "y" (Add (Variable "x") (Number 3))))
 			(hash-set (hash) "x" #f)))
 
 (displayln f)
+
