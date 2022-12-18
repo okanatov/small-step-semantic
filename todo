@@ -1,2 +1,1 @@
-While
 Re-make the expression reduce functions so that they would return environment as well as the value
