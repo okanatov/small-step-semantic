@@ -1,15 +1,15 @@
 #lang racket
 
-(require "showable.scm" "reducible.scm")
+(require "operations.scm" "tags.scm")
 
-(provide machine-step)
+(provide run)
 
-(define (machine-step expr env)
+(define (step expr)
+  (reduce expr))
+
+(define (run expr)
   (begin
     (displayln (show expr))
-    (cond
-      [(can-be-reduced expr) (let
-			       ([frame (reduce expr env)])
-			       (machine-step (car frame) (cdr frame)))]
-      [else (cons expr env)])))
-
+    (if (reducible expr)
+      (run (step expr))
+      expr)))

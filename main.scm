@@ -1,23 +1,10 @@
 #lang racket
 
-(require
-  "machine.scm"
-  "add.scm"
-  "multiply.scm"
-  "number.scm"
-  "boolean.scm"
-  "lessthan.scm"
-  "variable.scm"
-  "assign.scm"
-  "if.scm"
-  "sequence.scm"
-  "while.scm"
-  )
+(require "operations.scm" "tags.scm" "machine.scm" "number.scm" "add.scm")
 
+(define a (cons 'number (Number 4)))
+(define b (cons 'number (Number 6)))
 
-(define f (machine-step (While (LessThan (Variable "x") (Number 5))
-			       (Assign "x" (Multiply (Variable "x") (Number 3))))
-			(hash-set (hash) "x" 1)))
-
-(displayln f)
-
+(define c (cons 'add  (Add a b)))
+(run c)
+;(Number-value (get-content m))
