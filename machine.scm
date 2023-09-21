@@ -4,12 +4,14 @@
 
 (provide run)
 
-(define (step expr)
-  (reduce expr))
+(define (step expr env)
+  (reduce expr env))
 
-(define (run expr)
+(define (run expr env)
   (begin
-    (displayln (show expr))
+    (display (show expr))
+    (display " : ")
+    (displayln env)
     (if (reducible expr)
-      (run (step expr))
+      (run (step expr env) env)
       expr)))
